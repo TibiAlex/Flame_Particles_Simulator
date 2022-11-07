@@ -14,3 +14,7 @@ Din cate am inteles noi avem nevoie sa generam particule (unity are deja impleme
 https://subscription.packtpub.com/book/game-development/9781839217616/14/ch14lvl1sec54/creating-a-simple-particle-system-from-scratch<br/>
 http://buildnewgames.com/particle-systems/<br/>
 https://user-images.githubusercontent.com/56930275/199617633-7e750b66-f3fd-46cb-ad6e-0ce7774b2776.jpeg<br/>
+
+Am implementat in OpenGl pornind de la laboratorul 5.
+Am pus update-urile din fisiere.
+Cele 2 poze trebuie puse in assests, in folderul ala cu poze.
