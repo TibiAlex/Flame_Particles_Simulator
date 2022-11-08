@@ -8,6 +8,7 @@ layout(triangle_strip, max_vertices = 4) out;
 uniform mat4 View;
 uniform mat4 Projection;
 uniform vec3 eye_position;
+uniform float ds;
 
 // Output
 layout(location = 0) out vec2 texture_coord;
@@ -29,7 +30,7 @@ void EmitPoint(vec2 offset)
 
 void main()
 {
-    float ds = 0.2;
+    // float ds = 0.5;
 
     // TODO(student): Create a quad based on `triangle_strip`.
     //

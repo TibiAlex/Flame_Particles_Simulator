@@ -7,6 +7,9 @@ layout(location = 2) in vec2 v_texture_coord;
 
 // Uniform properties
 uniform mat4 Model;
+uniform float dt;
+uniform int dh;
+uniform int direction;
 
 
 struct Particle
@@ -34,12 +37,30 @@ void main()
     vec3 pos = data[gl_VertexID].position.xyz;
     vec3 spd = data[gl_VertexID].speed.xyz;
 
-    float dt = 0.01;
+  //  float dt = 0.01;
 
-    pos = pos + spd * dt + vec3(0, 1, 0) * dt * dt/2.0f;
-    spd = spd + vec3(0, 1, 0) * dt;
+    if (direction == 1) {
+        pos = pos + spd * dt + vec3(0, 1, 0) * dt * dt/2.0f;
+        spd = spd + vec3(0, 1, 0) * dt;
+    }
+    if (direction == 2) {
+        pos = pos + spd * dt + vec3(-1, 0, 0) * dt * dt/2.0f;
+        spd = spd + vec3(-1, 0, 0) * dt;
+    }
+    if (direction == 3) {
+        pos = pos + spd * dt + vec3(1, 0, 0) * dt * dt/2.0f;
+        spd = spd + vec3(1, 0, 0) * dt;
+    }
+    if (direction == 4) {
+        pos = pos + spd * dt + vec3(0, 0, -1) * dt * dt/2.0f;
+        spd = spd + vec3(0, 0, -1) * dt;
+    }
+    if (direction == 5) {
+        pos = pos + spd * dt + vec3(0, 0, 1) * dt * dt/2.0f;
+        spd = spd + vec3(0, 0, 1) * dt;
+    }
 
-    if(pos.y > (500 - rand(pos.xy) * 500))
+    if(pos.y > (dh - rand(pos.xy) * dh))
     {
         pos = data[gl_VertexID].iposition.xyz;
         spd = data[gl_VertexID].ispeed.xyz;

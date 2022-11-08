@@ -45,5 +45,16 @@ namespace m2
 
         float smokeSphereDiametre;
         float rSmokeSize;
+
+        float dt_fire;
+        float dt_smoke;
+
+        float ds_fire;
+        float ds_smoke;
+
+        int dh_fire;
+        int dh_smoke;
+
+        int direction;
     };
 }   // namespace m2

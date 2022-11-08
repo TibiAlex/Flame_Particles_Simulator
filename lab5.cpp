@@ -54,6 +54,17 @@ Lab5::~Lab5()
 
 void Lab5::Init()
 {
+    dt_fire = 0.0;
+    dt_smoke = 0.0;
+
+    ds_fire = 0.02;
+    ds_smoke = 0.02;
+
+    dh_fire = 100;
+    dh_smoke = 100;
+
+    direction = 1;
+
     auto camera = GetSceneCamera();
     camera->SetPositionAndRotation(glm::vec3(0, 8, 8), glm::quat(glm::vec3(-40 * TO_RADIANS, 0, 0)));
     camera->Update();
@@ -77,7 +88,7 @@ void Lab5::Init()
     LoadShader("Smoke_particle");
 
     // number of particles
-    unsigned int nrParticles = 15000;
+    unsigned int nrParticles = 50000;
 
     particleEffect = new ParticleEffect<Particle>();
     particleEffect->Generate(nrParticles, true);
@@ -111,7 +122,7 @@ void Lab5::Init()
 
     particleSSBO->SetBufferData(data);
 
-    unsigned int nrSmokeParticles = 750;
+    unsigned int nrSmokeParticles = 1000;
 
     particleEffect_smoke = new ParticleEffect<Particle>();
     particleEffect_smoke->Generate(nrSmokeParticles, true);
@@ -175,6 +186,19 @@ void Lab5::Update(float deltaTimeSeconds)
         if (shader->GetProgramID())
         {
             shader->Use();
+
+            int loc_dt = shader->GetUniformLocation("dt");
+            glUniform1f(loc_dt, dt_fire);
+
+            int loc_ds = shader->GetUniformLocation("ds");
+            glUniform1f(loc_ds, ds_fire);
+
+            int loc_dh = shader->GetUniformLocation("dh");
+            glUniform1i(loc_dh, dh_fire);
+
+            int loc_dir = shader->GetUniformLocation("direction");
+            glUniform1i(loc_dir, direction);
+
             TextureManager::GetTexture("fire_particle.png")->BindToTextureUnit(GL_TEXTURE0);
             particleEffect->Render(GetSceneCamera(), shader);
         }
@@ -184,6 +208,19 @@ void Lab5::Update(float deltaTimeSeconds)
         if (shader_smoke->GetProgramID())
         {
             shader_smoke->Use();
+
+            int loc_dt = shader_smoke->GetUniformLocation("dt");
+            glUniform1f(loc_dt, dt_smoke);
+
+            int loc_ds = shader_smoke->GetUniformLocation("ds");
+            glUniform1f(loc_ds, ds_smoke);
+
+            int loc_dh = shader_smoke->GetUniformLocation("dh");
+            glUniform1i(loc_dh, dh_smoke);
+
+            int loc_dir = shader_smoke->GetUniformLocation("direction");
+            glUniform1i(loc_dir, direction);
+
             TextureManager::GetTexture("smoke_particle.png")->BindToTextureUnit(GL_TEXTURE0);
             particleEffect_smoke->Render(GetSceneCamera(), shader_smoke);
         }
@@ -241,6 +278,80 @@ void Lab5::OnInputUpdate(float deltaTime, int mods)
 
 void Lab5::OnKeyPress(int key, int mods)
 {
+    if (key == GLFW_KEY_EQUAL) {
+        dt_fire+=0.01;
+        cout << "dt_fire: " << dt_fire << endl;
+    }
+    if (key == GLFW_KEY_MINUS) {
+        dt_fire-= 0.01;
+        cout << "dt_fire: " << dt_fire << endl;
+    }
+
+    if (key == GLFW_KEY_RIGHT_BRACKET) {
+        dt_smoke += 0.01;
+        cout << "dt_smoke: " << dt_smoke << endl;
+    }
+    if (key == GLFW_KEY_LEFT_BRACKET) {
+        dt_smoke -= 0.01;
+        cout << "dt_smoke: " << dt_smoke << endl;
+    }
+
+    if (key == GLFW_KEY_0) {
+        ds_fire += 0.01;
+        cout << "ds_fire: " << ds_fire << endl;
+    }
+    if (key == GLFW_KEY_9 && ds_fire >= 0.03) {
+        ds_fire -= 0.01;
+        cout << "ds_fire: " << ds_fire << endl;
+    }
+
+    if (key == GLFW_KEY_P) {
+        ds_smoke += 0.01;
+        cout << "ds_smoke: " << ds_smoke << endl;
+    }
+    if (key == GLFW_KEY_O && ds_smoke >= 0.03) {
+        ds_smoke -= 0.01;
+        cout << "ds_smoke: " << ds_smoke << endl;
+    }
+
+    if (key == GLFW_KEY_8) {
+        dh_fire += 100;
+        cout << "dh_fire: " << dh_fire << endl;
+    }
+    if (key == GLFW_KEY_7 && dh_fire >= 100) {
+        dh_fire -= 100;
+        cout << "dh_fire: " << dh_fire << endl;
+    }
+
+    if (key == GLFW_KEY_I) {
+        dh_smoke += 100;
+        cout << "dh_smoke: " << dh_smoke << endl;
+    }
+    if (key == GLFW_KEY_U && dh_smoke >= 100) {
+        dh_smoke -= 100;
+        cout << "dh_smoke: " << dh_smoke << endl;
+    }
+
+    if (key == GLFW_KEY_1 && direction != 1) {
+        direction = 1;
+        cout << "direction: " << direction << endl;
+    }
+    if (key == GLFW_KEY_2 && direction != 2) {
+        direction = 2;
+        cout << "direction: " << direction << endl;
+    }
+    if (key == GLFW_KEY_3 && direction != 3) {
+        direction = 3;
+        cout << "direction: " << direction << endl;
+    }
+    if (key == GLFW_KEY_4 && direction != 4) {
+        direction = 4;
+        cout << "direction: " << direction << endl;
+    }
+    if (key == GLFW_KEY_5 && direction != 5) {
+        direction = 5;
+        cout << "direction: " << direction << endl;
+    }
 }
 
 
